@@ -10,11 +10,10 @@ require_once 'conectare.php';
 
 $response = array();
 
+//tip_haine: bebelusi, copii, adulti
+//marimi: 3-6 luni, 10-12 ani, xs, s, xxxl
 //TO DO:
 //->ecriptare parola+email/ecriptare toata baza de date 
-//->case delogare
-//->autif ong
-//->autif donator
 
 if (isset($_GET['apicall'])) {
     $json = file_get_contents('php://input');
@@ -155,6 +154,7 @@ if (isset($_GET['apicall'])) {
                 $response["mesaj"] = "Autentificarea a fost facuta cu succes";
             }
             break;
+
         case 'ong_cerere_haine':
             $tip_haine = $obj["tip_haine"];
             $marimi = $obj["marimi"];
@@ -169,6 +169,7 @@ if (isset($_GET['apicall'])) {
             $response["eroare"] = false;
             $response["mesaj"] = "Cererea a fost creata cu succes!";
             break;
+
         case 'ong_cerere_jucarii':
             $id_ong = $obj["id_ong"];
             $cantitate = $obj["cantitate"];
@@ -181,6 +182,39 @@ if (isset($_GET['apicall'])) {
             $response["eroare"] = false;
             $response["mesaj"] = "Cererea a fost creata cu succes!";
             break;
+
+        case 'donatii_haine':
+            $id_donator = $obj["id_donator"];
+            $tip_haine = $obj["tip_haine"];
+            $marimi = $obj["marimi"];
+            $id_ong = $obj["id_ong"];
+            $cantitate = $obj["cantitate"];
+            $data_donatie = $obj["data_donatie"];
+            $disponibilitate_zi = $obj["disponibilitate_zi"];
+
+            $stmt = $conn->prepare("INSERT INTO donatii_haine (id_donator, tip_haine, marimi, id_ong, cantitate, data_donatie, disponibilitate_zi) VALUES (?), (?), (?), (?), (?), (?), (?)");
+            $stmt->bind_param("sssssss", $id_donator, $tip_haine, $marimi, $id_ong, $cantitate, $data_donatie, $disponibilitate_zi);
+            $stmt->execute();
+
+            $response["eroare"] = false;
+            $response["mesaj"] = "Donatia de haine a fost creata cu succes!";
+            break;
+
+        case 'donatii_jucarii':
+            $id_donator = $obj["id_donator"];
+            $id_ong = $obj["id_ong"];
+            $cantitate = $obj["cantitate"];
+            $data_donatie = $obj["data_donatie"];
+            $disponibilitate_zi = $obj["disponibilitate_zi"];
+
+            $stmt = $conn->prepare("INSERT INTO donatii_haine (id_donator, id_ong, cantitate, data_donatie, disponibilitate_zi) VALUES (?), (?), (?), (?), (?)");
+            $stmt->bind_param("sssss", $id_donator, $id_ong, $cantitate, $data_donatie, $disponibilitate_zi);
+            $stmt->execute();
+
+            $response["eroare"] = false;
+            $response["mesaj"] = "Donatia de jucarii a fost creata cu succes!";
+            break;
+
         default:
             $response["eroare"] = true;
             $response["mesaj"] = "A aparut o eroare";
