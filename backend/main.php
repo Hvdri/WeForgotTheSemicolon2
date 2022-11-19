@@ -184,19 +184,59 @@ if (isset($_GET['apicall'])) {
         case 'donatii_haine':
             $id_donator = $obj["id_donator"];
             $tip_haine = $obj["tip_haine"];
-            //$id_ong = $obj["id_ong"];
             $cantitate = $obj["cantitate"];
+            $adresa = $obj["adresa"];
             $data_donatie = $obj["data_donatie"];
             $disponibilitate_zi = $obj["disponibilitate_zi"];
 
-
-
-            $stmt = $conn->prepare("INSERT INTO donatii_haine (id_donator, tip_haine, id_ong, cantitate, data_donatie, disponibilitate_zi) VALUES (?), (?), (?), (?), (?), (?)");
-            $stmt->bind_param("ssssss", $id_donator, $tip_haine, $id_ong, $cantitate, $data_donatie, $disponibilitate_zi);
+            $stmt = $conn->prepare("INSERT INTO donatii_haine (id_donator, tip_haine, cantitate, adresa, data_donatie, disponibilitate_zi) VALUES (?), (?), (?), (?), (?), (?)");
+            $stmt->bind_param("ssssss", $id_donator, $tip_haine, $cantitate, $adresa, $data_donatie, $disponibilitate_zi);
             $stmt->execute();
 
-            $response["eroare"] = false;
-            $response["mesaj"] = "Donatia de haine a fost creata cu succes!";
+            $stmt = $conn->prepare("SELECT MAX(id_donatie_haine) FROM donatii_haine WHERE id_donator = ?");
+            $stmt->bind_param("s", $id_donator);
+            $stmt->execute();
+            $stmt->store_result();
+            $randuri = $stmt->num_rows;
+            $stmt->bind_result($id_donatie_haine);
+            $stmt->fetch();
+
+            if ($randuri > 0) {
+                $response["eroare"] = false;
+                $response["mesaj"] = "Donatia de haine a fost creata cu succes!";
+            } else {
+                $response["eroare"] = true;
+                $response["mesaj"] = "A aparut o eroare la crearea donatiei!";
+            }
+
+            $stmt = $conn->prepare("SELECT id_ong, cantitate FROM ong_cerere_haine WHERE tip_haine = ? AND cantitate > 0");
+            $stmt->bind_param("s", $tip_haine);
+            $stmt->execute();
+            //$stmt->store_result();
+            $randuri = $stmt->num_rows;
+
+            if ($randuri > 0) {
+                $onguri_ok_haine = array();
+                while ($row = $stmt->fetch()) {
+                    $stmt = $conn->prepare("SELECT denumire_ong, imagine FROM ong WHERE id_ong = ?");
+                    $stmt->bind_param("s", $row["id_ong"]);
+                    $stmt->execute();
+                    $stmt->store_result();
+                    $stmt->bind_result($denumire_ong, $imagine);
+                    $stmt->fetch();
+
+                    $ong_ok_haine = array();
+                    $ong_ok_haine["id_ong"] = $row["id_ong"];
+                    $ong_ok_haine["denumire_ong"] = $denumire_ong;
+                    $ong_ok_haine["imagine"] = $imagine;
+
+                    array_push($onguri_ok_haine, $ong_ok_haine);
+                }
+                $response["eroare"] = false;
+                $response["mesaj"] = "ONG-urile au fost trimise cu succes!";
+                $response["onguri"] = $onguri_ok_haine;
+                $response["id_donatie_haine"] = $id_donatie_haine;
+            }
             break;
 
         case 'donatii_jucarii':
@@ -212,6 +252,37 @@ if (isset($_GET['apicall'])) {
 
             $response["eroare"] = false;
             $response["mesaj"] = "Donatia de jucarii a fost creata cu succes!";
+            break;
+
+        case 'ong_ok_haine':
+
+            $stmt = $conn->prepare("SELECT id_ong, cantitate FROM ong_cerere_haine WHERE tip_haine = ? AND cantitate > 0");
+            $stmt->bind_param("s", $tip_haine);
+            $stmt->execute();
+            //$stmt->store_result();
+            $randuri = $stmt->num_rows;
+
+            if ($randuri > 0) {
+                $onguri_ok_haine = array();
+                while ($row = $stmt->fetch()) {
+                    $stmt = $conn->prepare("SELECT denumire_ong, imagine FROM ong WHERE id_ong = ?");
+                    $stmt->bind_param("s", $row["id_ong"]);
+                    $stmt->execute();
+                    $stmt->store_result();
+                    $stmt->bind_result($denumire_ong, $imagine);
+                    $stmt->fetch();
+
+                    $ong_ok_haine = array();
+                    $ong_ok_haine["id_ong"] = $row["id_ong"];
+                    $ong_ok_haine["denumire_ong"] = $denumire_ong;
+                    $ong_ok_haine["imagine"] = $imagine;
+
+                    array_push($onguri_ok_haine, $ong_ok_haine);
+                }
+                $response["eroare"] = false;
+                $response["mesaj"] = "ONG-urile au fost trimise cu succes!";
+                $response["onguri"] = $onguri_ok_haine;
+            }
             break;
 
         default:
