@@ -169,6 +169,18 @@ if (isset($_GET['apicall'])) {
             $response["eroare"] = false;
             $response["mesaj"] = "Cererea a fost creata cu succes!";
             break;
+        case 'ong_cerere_jucarii':
+            $id_ong = $obj["id_ong"];
+            $cantitate = $obj["cantitate"];
+            $mesaj = $obj["mesaj"];
+
+            $stmt = $conn->prepare("INSERT INTO ong_cereri_jucarii (id_ong, cantitate, mesaj) VALUES (?), (?), (?)");
+            $stmt->bind_param("sss", $id_ong, $cantitate, $mesaj);
+            $stmt->execute();
+
+            $response["eroare"] = false;
+            $response["mesaj"] = "Cererea a fost creata cu succes!";
+            break;
         default:
             $response["eroare"] = true;
             $response["mesaj"] = "A aparut o eroare";
