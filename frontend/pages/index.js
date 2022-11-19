@@ -1,5 +1,7 @@
 import Head from 'next/head'
 import Login from '../components/Login'
+import Navbar from '../components/Navbar'
+
 
 import { getSession } from 'next-auth/react'
 
@@ -13,6 +15,7 @@ export default function Home({ session }) {
         <title>HoriaBook</title>
       </Head>
 
+      <NavBar />
       {/* <Header /> */}
 
       <main className='flex'>
