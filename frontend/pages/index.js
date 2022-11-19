@@ -7,7 +7,7 @@ import { getSession } from 'next-auth/react'
 
 export default function Home({ session }) {
   
-  if (!session) return <Login />;
+  // if (!session) return <Login />;
   
   return (
     <div className='h-screen bg-gray-100 overflow-hidden'>
@@ -15,7 +15,7 @@ export default function Home({ session }) {
         <title>HoriaBook</title>
       </Head>
 
-      <NavBar />
+      <Navbar />
       {/* <Header /> */}
 
       <main className='flex'>
