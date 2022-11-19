@@ -11,7 +11,6 @@ require_once 'conectare.php';
 $response = array();
 
 //tip_haine: bebelusi, copii, adulti
-//marimi: 3-6 luni, 10-12 ani, xs, s, xxxl
 //TO DO:
 //->ecriptare parola+email/ecriptare toata baza de date 
 
@@ -157,13 +156,12 @@ if (isset($_GET['apicall'])) {
 
         case 'ong_cerere_haine':
             $tip_haine = $obj["tip_haine"];
-            $marimi = $obj["marimi"];
             $id_ong = $obj["id_ong"];
             $cantitate = $obj["cantitate"];
             $mesaj = $obj["mesaj"];
 
-            $stmt = $conn->prepare("INSERT INTO ong_cereri_haine (tip_haine, marimi, id_ong, cantitate, mesaj) VALUES (?), (?), (?), (?), (?)");
-            $stmt->bind_param("sssss", $tip_haine, $marimi, $id_ong, $cantitate, $mesaj);
+            $stmt = $conn->prepare("INSERT INTO ong_cereri_haine (tip_haine, id_ong, cantitate, mesaj) VALUES (?), (?), (?), (?)");
+            $stmt->bind_param("ssss", $tip_haine, $id_ong, $cantitate, $mesaj);
             $stmt->execute();
 
             $response["eroare"] = false;
@@ -186,14 +184,15 @@ if (isset($_GET['apicall'])) {
         case 'donatii_haine':
             $id_donator = $obj["id_donator"];
             $tip_haine = $obj["tip_haine"];
-            $marimi = $obj["marimi"];
-            $id_ong = $obj["id_ong"];
+            //$id_ong = $obj["id_ong"];
             $cantitate = $obj["cantitate"];
             $data_donatie = $obj["data_donatie"];
             $disponibilitate_zi = $obj["disponibilitate_zi"];
 
-            $stmt = $conn->prepare("INSERT INTO donatii_haine (id_donator, tip_haine, marimi, id_ong, cantitate, data_donatie, disponibilitate_zi) VALUES (?), (?), (?), (?), (?), (?), (?)");
-            $stmt->bind_param("sssssss", $id_donator, $tip_haine, $marimi, $id_ong, $cantitate, $data_donatie, $disponibilitate_zi);
+
+
+            $stmt = $conn->prepare("INSERT INTO donatii_haine (id_donator, tip_haine, id_ong, cantitate, data_donatie, disponibilitate_zi) VALUES (?), (?), (?), (?), (?), (?)");
+            $stmt->bind_param("ssssss", $id_donator, $tip_haine, $id_ong, $cantitate, $data_donatie, $disponibilitate_zi);
             $stmt->execute();
 
             $response["eroare"] = false;
