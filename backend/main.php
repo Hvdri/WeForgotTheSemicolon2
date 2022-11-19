@@ -297,13 +297,19 @@ if (isset($_GET['apicall'])) {
             break;
 
         case 'ong_ok_haine':
-            $id_ong = $obj("id_ong");
-            $id_donatie_haine = $obj("id_donatie_haine");
-            $cantitate_donata = $obj("cantitate");
-            $tip_haine = $obj("tip_haine");
+            $id_ong = $obj["id_ong"];
+            $id_donatie_haine = $obj["id_donatie_haine"];
+
             $stmt = $conn->prepare("UPDATE donatii_haine SET id_ong = ? WHERE id_donatie_haine = ? ");
             $stmt->bind_param("ss", $id_ong, $id_donatie_haine);
             $stmt->execute();
+
+            $stmt = $conn->prepare("SELECT cantitate, tip_haine FROM donatii_haine WHERE id_donatie_haine = ?");
+            $stmt->bind_param("ss", $id_donatie_haine);
+            $stmt->execute();
+            $stmt->store_result();
+            $stmt->bind_result($cantitate_donata, $tip_haine);
+            $stmt->fetch();
 
             $stmt = $conn->prepare("SELECT cantitate, id_cerere_haine FROM ong_cereri_haine WHERE id_cerere_haine = (SELECT MIN(id_cerere_haine) FROM ong_cereri_haine WHERE id_ong = ? AND tip_haine = ? )");
             $stmt->bind_param("ss", $id_ong, $tip_haine);
