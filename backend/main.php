@@ -10,25 +10,73 @@ require_once 'conectare.php';
 
 $response = array();
 
+//TO DO:
+//->ecriptare parola+email/ecriptare toata baza de date 
+//->case delogare
+//->autif ong
+//->autif donator
+
 if (isset($_GET['apicall'])) {
     $json = file_get_contents('php://input');
     $obj = json_decode($json, true);
 
     switch ($_GET['apicall']) {
-        case 'logare':
+        case 'logare_donator':
             $email = $obj["email"];
             $parola = $obj["parola"];
 
             // Selectare în BD după e-mail și telefon
-            $stmt = $conn->prepare("SELECT email, parola FROM angajati WHERE email = ?");
+            $stmt = $conn->prepare("SELECT email, parola FROM donatori WHERE email = ?");
             $stmt->bind_param("s", $email);
             $stmt->execute();
             $stmt->store_result();
             $randuri = $stmt->num_rows;
-            $stmt->bind_result($email_BD, $parola_BD);
+            $stmt->bind_result($email_donator, $parola_donator);
             $stmt->fetch();
 
-            if ($randuri > 0 && $parola === $parola_BD && $email === $email_BD) {
+            if ($randuri > 0 && $parola === $parola_donator && $email === $email_donator) {
+                $response["eroare"] = false;
+                $response["mesaj"] = "V-ati conectat cu succes!";
+            } else {
+                $response["eroare"] = true;
+                $response["mesaj"] = "Emailul/parola este gresita!";
+            }
+            break;
+        case 'logare_donator':
+            $email = $obj["email"];
+            $parola = $obj["parola"];
+
+            // Selectare în BD după e-mail și telefon
+            $stmt = $conn->prepare("SELECT email, parola FROM donatori WHERE email = ?");
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+            $stmt->store_result();
+            $randuri = $stmt->num_rows;
+            $stmt->bind_result($email_donator, $parola_donator);
+            $stmt->fetch();
+
+            if ($randuri > 0 && $parola === $parola_donator && $email === $email_donator) {
+                $response["eroare"] = false;
+                $response["mesaj"] = "V-ati conectat cu succes!";
+            } else {
+                $response["eroare"] = true;
+                $response["mesaj"] = "Emailul/parola este gresita!";
+            }
+            break;
+        case 'logare_ONG':
+            $email = $obj["email"];
+            $parola = $obj["parola"];
+
+            // Selectare în BD după e-mail și telefon
+            $stmt = $conn->prepare("SELECT email, parola FROM ONG WHERE email = ?");
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+            $stmt->store_result();
+            $randuri = $stmt->num_rows;
+            $stmt->bind_result($email_ONG, $parola_ONG);
+            $stmt->fetch();
+
+            if ($randuri > 0 && $parola === $parola_ONG && $email === $email_ONG) {
                 $response["eroare"] = false;
                 $response["mesaj"] = "V-ati conectat cu succes!";
             } else {
