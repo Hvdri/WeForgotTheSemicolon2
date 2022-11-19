@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Login from '../components/Login'
-import Navbar from '../components/Navbar'
-
+import Nav from '../components/Nav'
+import Menu from '../components/Menu'
 
 import { getSession } from 'next-auth/react'
 
@@ -12,19 +12,20 @@ export default function Home({ session }) {
   return (
     <div className='h-screen bg-gray-100 overflow-hidden'>
       <Head>
-        <title>HoriaBook</title>
+        <title>Mircea are nevoie de haine</title>
       </Head>
 
-      <Navbar />
+      <Nav />
       {/* <Header /> */}
 
-      <main className='flex'>
+      <div className='flex'>
 
+        <Menu />
         {/* <Sidebar /> */}
         {/* <Feed /> */}
         {/* Widgets */}
 
-      </main>
+      </div>
 
     </div>
   )
