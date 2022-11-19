@@ -315,7 +315,7 @@ if (isset($_GET['apicall'])) {
 
             $cantitate_donata = intval($cantitate_donata);
             $cantitate = intval($cantitate);
-            if ($cantitate_donata > $cantitate && $randuri != 0) {
+            while ($cantitate_donata > $cantitate && $randuri != 0) {
                 $cantitate_donata = $cantitate_donata - $cantitate;
                 $stmt = $conn->prepare("DELETE FROM ong_cereri_haine WHERE id_cerere_haine = ?");
                 $stmt->bind_param("s", $id_cerere_haine);
