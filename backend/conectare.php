@@ -1,7 +1,7 @@
 <?php
 $db_name = "giveahand";
-$mysql_username = "test";
-$mysql_password = "test";
+$mysql_username = "root";
+$mysql_password = "";
 $server_name = "localhost";
 // Create connection
 $conn = new mysqli($server_name, $mysql_username, $mysql_password, $db_name);
