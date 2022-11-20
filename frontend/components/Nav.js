@@ -5,7 +5,7 @@ function Nav() {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div>
-      <nav className="bg-gray-800">
+      <nav className="bg-white-800 shadow-lg">
         <div className="mx-auto px-5 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             <div className="flex items-center">
@@ -20,28 +20,28 @@ function Nav() {
                 <div className="ml-10 flex items-baseline space-x-4">
                   <a
                     href="#"
-                    className=" hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm font-medium"
+                    className="text-gray-300 hover:bg-gray-700 transition ease-in-out text-orange px-3 py-2 rounded-md text-sm font-medium"
                   >
                     Acasa
                   </a>
 
                   <a
                     href="#"
-                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                    className="text-gray-300 hover:bg-gray-700 hover:text-orange px-3 py-2 rounded-md text-sm font-medium"
                   >
                     Despre Noi
                   </a>
 
                   <a
                     href="#"
-                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                    className="text-gray-300 hover:bg-gray-700 hover:text-orange px-3 py-2 rounded-md text-sm font-medium"
                   >
                     Organizatii ONG-uri
                   </a>
 
                   <a
                     href="#"
-                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                    className="text-gray-300 hover:bg-gray-700 hover:text-orange px-3 py-2 rounded-md text-sm font-medium"
                   >
                     Doneaza
                   </a>
@@ -54,7 +54,7 @@ function Nav() {
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 type="button"
-                className="bg-gray-900 flex p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                className="bg-gray-900 flex p-2 rounded-md text-gray-400 hover:text-orange hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                 aria-controls="mobile-menu"
                 aria-expanded="false"
               >
@@ -111,35 +111,35 @@ function Nav() {
               <div ref={ref} className="px-2 pt-2 pb-3 space-y-1 sm:px-3 text-center">
                 <a
                   href="#"
-                  className="hover:bg-gray-700 text-white block px-3 py-2 rounded-md text-base font-medium"
+                  className="hover:bg-gray-700 text-orange block px-3 py-2 rounded-md text-base font-medium"
                 >
                   Dashboard
                 </a>
 
                 <a
                   href="#"
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                  className="text-gray-300 hover:bg-gray-700 hover:text-orange block px-3 py-2 rounded-md text-base font-medium"
                 >
                   Team
                 </a>
 
                 <a
                   href="#"
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                  className="text-gray-300 hover:bg-gray-700 hover:text-orange block px-3 py-2 rounded-md text-base font-medium"
                 >
                   Projects
                 </a>
 
                 <a
                   href="#"
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                  className="text-gray-300 hover:bg-gray-700 hover:text-orange block px-3 py-2 rounded-md text-base font-medium"
                 >
                   Calendar
                 </a>
 
                 <a
                   href="#"
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                  className="text-gray-300 hover:bg-gray-700 hover:text-orange block px-3 py-2 rounded-md text-base font-medium"
                 >
                   Reports
                 </a>
@@ -149,11 +149,7 @@ function Nav() {
         </Transition>
       </nav>
 
-      <header className="flex justify-center bg-white shadow">
-        <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold text-gray-900">Marcel</h1>
-        </div>
-      </header>
+      
       
     </div>
   );
